@@ -1,0 +1,48 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    {{ this_blog.title }} | {{ block.super }}
+{% endblock %}
+
+{#{% block Heading %}#}
+{#    {{ this_blog.user }}'s Post#}
+{#{% endblock %}#}
+
+{% block bread_home %}
+    <li><a href="{% url 'index' %}">home</a></li>
+    <li><a href="{% url 'blogs:list' %}">Blogs</a></li>
+    <li class="active">{{ this_blog.title|truncatechars:20}}</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="col-sm-12 col-md-12 col-lg-12 -align-center">
+        <div class="thumbnail">
+            {% if this_blog.draft %}<span style="color: red"><b>DRAFT</b></span>{% endif %}
+            {% if this_blog.publish > today %}<span style="color: green"><b>Future Post</b></span>{% endif %}
+
+            <h3 style="margin-left: 20px">{{ this_blog.title }}</h3>
+            {% if this_blog.timestamp <= this_blog.updated %}
+                <p style="margin-left: 20px; color: gray;">Last Updated : {{ this_blog.updated|timesince }}
+                    ago</p>{% else %}
+                <p style="margin-left: 20px; color: gray;">Added : {{ this_blog.timestamp|timesince }}
+                    ago</p>{% endif %}
+            <p style="margin-left: 20px"><i>Posted by : {{ this_blog.user }}</i></p>
+
+            {% if this_blog.image %}
+                <br>
+                <center><img src="{{ this_blog.image.url }}" class="img-responsive"></center><br>{% endif %}
+
+            <div class="fb-like" style="margin-left: 20px" data-href="{{ request.build_absolute_uri }}"
+                 data-layout="button_count" data-action="like" data-size="small" data-show-faces="true"
+                 data-share="true"></div>
+            <hr>
+            <div style="margin-left: 20px">
+                <p><b>Read More:</b></p>
+                <p style="margin-left:20px;">{{ this_blog.detail|safe|linebreaks }}</p>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 -align-center fb-comments"
+             data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+    </div>
+{% endblock %}

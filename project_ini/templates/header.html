@@ -1,0 +1,124 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    {% load staticfiles %}
+    <title>{% block titlepage %}
+        Idara Nusrate Islamia, Global
+    {% endblock %}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static '/css/base.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static '/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+    {% block head_extra %}
+    {% endblock %}
+</head>
+<body class="body" style="background-color:#f6f6f6">
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+{# NAV BAR HERE#}
+{% include 'nav_bar.html' %}
+
+<div class="container-fluid" style="min-height:100%; background: rgb(239,239,239);">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-md-2">
+            <p style="color: rgba(255,255,255,0);">made by Ali</p>
+        </div>
+        <div class="col-md-8 -align-center">
+            <ol class="breadcrumb">
+                {% block bread_home %}
+                {% endblock %}
+            </ol>
+        </div>
+        <div class="col-md-2">
+            <p style="color: rgba(255,255,255,0);">For you to use</p>
+        </div>
+        <div class="col-md-12">
+            {% include 'messages.html' %}
+        </div>
+
+        <div class="col-sm-10 ">
+            <center>
+                <h1>{% block Heading %}
+                {% endblock %}</h1>
+            </center>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-2 col-md-3 col-lg-3" style="margin-left: 20px">
+            {% block left_content %}
+            {% endblock %}
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            {% block right_content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{#<footer>#}
+{#    <div class="container-fluid" style='margin-left:15px'>#}
+{#        <p><a href="#" target="blank">Contact</a> | <a href="#" target="blank">LinkedIn</a> | <a href="#"#}
+{#                                                                                                 target="blank">Twitter</a>#}
+{#            | <a href="#" target="blank">Google+</a></p>#}
+{#    </div>#}
+{#</footer>#}
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://code.jquery.com/jquery-1.12.2.min.js"
+        integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".content-markdown").each(function () {
+            var content = $(this).text()
+            console.log(content)
+            var markedContent = marked(content)
+            console.log(markedContent)
+            $(this).html(markedContent)
+        })
+        $(".content-markdown img").each(function () {
+            $(this).addClass("img-responsive")
+        })
+    })
+</script>
+
+{% include 'footer.html' %}
+</body>
+</html>

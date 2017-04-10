@@ -1,0 +1,87 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" >INI Global</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="">
+                    <a href="{% url 'matrimonial:list' %}">
+                        <span class="fa fa-heart fa-lg" aria-hidden="true"></span>&nbsp; Matrimonial
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url 'jobs:list' %}">
+                        <span class="fa fa-briefcase fa-lg" aria-hidden="true"></span>&nbsp; Job
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url 'qna:list' %}">
+                        <span class="fa fa-pencil fa-lg" aria-hidden="true"></span>&nbsp; Q/A
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url 'blogs:list' %}">
+                        <span class="fa fa-book fa-lg" aria-hidden="true"></span>&nbsp; Blogs
+                    </a>
+                </li>
+{#                <li class="">#}
+{#                    <a href="#">#}
+{#                        <span class="fa fa-video-camera fa-lg" aria-hidden="true"></span>&nbsp; Videos#}
+{#                    </a>#}
+{#                </li>#}
+                <li class="">
+                    <a href="{% url 'photos' %}">
+                        <span class="fa fa-image fa-lg" aria-hidden="true"></span>&nbsp; Photos
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li class="">
+                        <a href="{% url 'profile' %}">
+                            <span class="fa fa-user-circle fa-lg" aria-hidden="true"></span>&nbsp; Welcome {{ user }}
+                        </a>
+                    </li>
+                    <li class="hidden">
+                        <a href="#">
+                            <span class="fa fa-key fa-lg" aria-hidden="true"></span>&nbsp; New
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'logout' %}">
+                            <span class="fa fa-sign-out fa-lg" aria-hidden="true"></span>&nbsp; Logout
+                        </a>
+                    </li>
+                    {% if user.is_superuser or user.is_staff %}
+                        <li class="">
+                            <a href="/admin">
+                                <span class="fa fa-code fa-lg" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="">
+                        <a href="{% url 'register' %}">
+                            <span class="fa fa-user-plus fa-lg" aria-hidden="true"></span>&nbsp; Register
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'login' %}">
+                            <span class="fa fa-user fa-lg" aria-hidden="true"></span>&nbsp; Login
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

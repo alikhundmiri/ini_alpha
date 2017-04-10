@@ -1,0 +1,89 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    Matrimonial | {{ block.super }}
+{% endblock %}
+
+{% block Heading %}
+    Matrimonial Search
+{% endblock %}
+
+{% block bread_home %}
+    <li><a href="{% url 'index' %}">home</a></li>
+    <li class="active">{{ title }}</li>
+{% endblock %}
+
+
+{% block content %}
+    {% if all_list %}
+        <div class="row">
+            {% for offer_m in all_list %}
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="thumbnail">
+
+                        {% if offer_m.Draft %}<span style="color: red"><b>DRAFT</b></span>{% endif %}
+                        {% if offer_m.publish > today %}<span style="color: green"><b>Future Post</b></span>{% endif %}
+                        <div class="caption">
+                            <h3><a href="{{ offer_m.get_absolute_url }}"> {{ offer_m.title }}</a>{% if offer_m.image %}
+                                <small> has image <i class="fa fa-image fa-fx"></i></small>{% endif %}</h3>
+                            <small><h5>Posted by : {{ offer_m.user }}</h5></small>
+                            <p>Gender : {{ offer_m.your_gender }}</p>
+                            <p>Age : {{ offer_m.your_age }}</p>
+                            {% if offer_m.timestamp <= offer_m.updated %}
+                                <p>Last Updated : {{ offer_m.updated|timesince }} ago</p>
+                            {% else %}
+                                <p>Added : {{ offer_m.timestamp|timesince }} ago</p>
+                            {% endif %}
+                            <p><a href="#" class="btn btn-primary" role="button">See Detail</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination ">
+            <ul class="step-links pager">
+                {% if all_list.has_previous %}
+                    <li><a href="?{{ page_request_var }}={{ all_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Newer</a>
+                    </li>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ all_list.number }} of {{ all_list.paginator.num_pages }}.
+                </span>
+
+                {% if all_list.has_next %}
+                    <li><a href="?{{ page_request_var }}=
+                            {{ all_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Older</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    {% else %}
+        <h3>No Matrimonial offers exist :(</h3>
+        <h3><a href="{% url 'matrimonial:create' %}">Create New Matrimonial Offer</a></h3>
+    {% endif %}
+{% endblock %}
+
+{% block left_content %}
+    <p>Post New Matrimonial </p>
+    <p><a href="{% url 'matrimonial:create' %}" class="btn btn-primary" role="button">Post New!</a></p>
+    <br>
+    <hr>
+    <p>Search all <i>Number of posts</i> in Matrimonial:</p>
+    <form method="get" action="">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search Matrimonial"
+                       value="{{ request.GET.q }}">
+                <span class="input-group-btn">
+        <button class="btn btn-default" type="submit" value="Search"><i class="fa fa-search"></i></button>
+      </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </form>
+    <br>
+
+{% endblock %}
+

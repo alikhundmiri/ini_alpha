@@ -1,0 +1,30 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    {{ user }}'s Profile | {{ block.super }}
+{% endblock %}
+
+{% block Heading %}
+    Welcome {{ user }}
+{% endblock %}
+
+{% block content %}
+
+    {#    Questions asked#}
+    {#    questions answered (if staff or superuser)#}
+    {#    matrimonial offers#}
+    {% if mat %}
+        {% for all_mat in mat %}
+            <h3>{{ all_mat.title }}</h3>
+        {% endfor %}
+
+    {% endif %}
+    {#    Jobs Posted#}
+    {#    Jobs Pinned#}
+    {#    blogs Posted (if staff or superuser)#}
+    {#    blogs liked#}
+{% endblock %}
+
+{% block left_content %}
+
+{% endblock %}

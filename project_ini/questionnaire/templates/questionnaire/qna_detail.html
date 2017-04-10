@@ -1,0 +1,75 @@
+{% extends 'header.html' %}
+{% load crispy_forms_tags %}
+{% block titlepage %}
+    {{ instance.question }} | {{ block.super }}
+{% endblock %}
+
+{#{% block Heading %}#}
+{#    {{ instance.user }}'s Question#}
+{#{% endblock %}#}
+{% block bread_home %}
+    <li><a href="{% url 'index' %}">home</a></li>
+    <li><a href="{% url 'qna:list' %}">{{ title }}</a></li>
+    <li class="active">{{ instance.question|truncatechars:20}}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="-align-center">
+        <div class="thumbnail">
+            {% if instance.Draft %}<span style="color: red"><b>DRAFT</b></span>{% endif %}
+            {% if instance.publish > today %}<span style="color: green"><b>Future Question</b></span>{% endif %}
+            <h2 style="margin-left: 20px">{{ instance.question }}</h2>
+            {% if instance.timestamp <= instance.updated %}
+                <p style="margin-left: 20px">Edited : {{ instance.updated|timesince }} ago</p>{% else %}
+                <p style="margin-left: 20px">Asked {{ instance.timestamp|timesince }} ago</p>{% endif %}
+
+            <p style="margin-left: 20px">Questioner : {{ instance.user }}</p>
+            {% if not instance.Draft %}
+                <div class="fb-like" style="margin-left: 20px" data-href="{{ request.build_absolute_uri }}"
+                     data-layout="button_count" data-action="like" data-size="small" data-show-faces="true"
+                     data-share="true"></div>{% endif %}
+            <hr>
+            <div style="margin-left: 20px; margin-right: 20px">
+
+                {% if instance.detail %}
+                    <br>
+                    <div class="content-markdown">
+                        {{ instance.detail }}
+                    </div>
+                    <br>
+                    <hr>
+
+                {% endif %}
+                <div>
+                    <h3 class=''>{{ comments.count }} Answers</h3>
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <b>{{ comment.user }}</b> |
+                            <small> {{ comment.timestamp|timesince }} ago</small>
+                            <div style="" class=''>
+                                <blockquote>
+                                    <p class="lead">
+                                        {{ comment.content }}
+                                    </p>
+                                </blockquote>
+                                <hr/>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <blockquote><p class="lead">No Answers yet :(, Upvote the Question to bring Attention of
+                            Respondents to this Question.</p></blockquote>
+                    {% endif %}
+                    {% if can_comment %}
+                        <form method="POST" action=".">{% csrf_token %}
+                            {{ comment_form|crispy }}
+                            <input type="submit" value="Answer!" class="btn btn-default">
+                        </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if not instance.Draft %}
+        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>{% endif %}
+{% endblock %}

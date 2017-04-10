@@ -1,0 +1,35 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    Photos | {{ block.super }}
+{% endblock %}
+
+{% block Heading %}
+    Photos
+{% endblock %}
+
+{% block bread_home %}
+    <li><a href="{% url 'index' %}">home</a></li>
+    <li class="active">{{ title }}</li>
+{% endblock %}
+
+{% block content %}
+    <h3>Jalsa-e-Mehdavia</h3>
+    <h4><b>25<sup>th</sup> February </b>2017</h4>
+    <div id="cp_widget_20f02e9d-70e3-48a5-aa86-af00149f7baa">...</div>
+    <script type="text/javascript">
+        var cpo = [];
+        cpo["_object"] = "cp_widget_20f02e9d-70e3-48a5-aa86-af00149f7baa";
+        cpo["_fid"] = "A0IAC4tUmpXH";
+        var _cpmp = _cpmp || [];
+        _cpmp.push(cpo);
+        (function () {
+            var cp = document.createElement("script");
+            cp.type = "text/javascript";
+            cp.async = true;
+            cp.src = "//www.cincopa.com/media-platform/runtime/libasync.js";
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(cp, c);
+        })(); </script>
+    <noscript>Powered by Cincopa Slideshow HTML for Business solution.</noscript>
+{% endblock %}

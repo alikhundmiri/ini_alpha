@@ -1,0 +1,60 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    {{ instance.title }} | {{ block.super }}
+{% endblock %}
+
+{#{% block Heading %}#}
+{#    Matrimonial detail#}
+{#{% endblock %}#}
+{% block bread_home %}
+    <li><a href="{% url 'index' %}">home</a></li>
+    <li><a href="{% url 'matrimonial:list' %}">Matrimonials</a></li>
+    <li class="active">{{ instance.title|truncatechars:20}}</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="col-sm-12 col-md-12 col-lg-12 -align-center">
+        <div class="thumbnail">
+            {% if instance.Draft %}<span style="color: red"><b>DRAFT</b></span>{% endif %}
+            {% if instance.publish > today %}<span style="color: green"><b>Future Post</b></span>{% endif %}
+            <h2 style="margin-left: 20px">{{ instance.title }}</h2>
+            {% if instance.timestamp <= instance.updated %}
+                <p style="margin-left: 20px">Last Updated : {{ instance.updated|timesince }}</p>{% else %}
+                <p style="margin-left: 20px">Added : {{ instance.timestamp|timesince }}</p>{% endif %}
+
+            {% if instance.image %}<img src="{{ instance.image.url }}" class="img-responsive">{% endif %}
+            <br>
+            <p style="margin-left: 20px">Author : {{ instance.user }}</p>
+            {% if not instance.Draft %}
+                <div class="fb-like" style="margin-left: 20px" data-href="{{ request.build_absolute_uri }}"
+                     data-layout="button_count" data-action="like" data-size="small" data-show-faces="true"
+                     data-share="true"></div>{% endif %}
+            <hr>
+            <h2>
+                <small>{{ instance.your_age }} Years old || {{ instance.your_gender }}</small>
+            </h2>
+            <div style="margin-left: 20px">
+
+
+                <br>
+                <div class="content-markdown">
+                    {{ instance.description }}
+                </div>
+                <br>
+                <hr>
+                {% if instance.email_address %}
+                    <p>email address: <a>{{ instance.email_address }}</a></p>
+                {% endif %}
+                {% if instance.phone_contact %}
+                    <p>Mobile Number: {{ instance.phone_contact }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if not instance.Draft %}
+        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>{% endif %}
+{% endblock %}
+

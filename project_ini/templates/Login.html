@@ -1,0 +1,73 @@
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load staticfiles %}
+    <title>{% block titlepage %}
+        Login | Idara Nusrate Islamia, Global
+    {% endblock %}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static '/css/base.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static '/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+    {% block head_extra %}
+    {% endblock %}
+</head>
+{% include 'nav_bar.html' %}
+<body>
+<div class="col-lg-12" style="height: 100%; margin-top: 100px">
+
+    {# form_text#}
+    <div class="container col-lg-6 col-md-6">
+        {% if tab_text == "Login" %}
+            <h3>Good to see you Back! <br>
+                <small>As salammualaykum!</small>
+            </h3>
+            <p>Please provide your credentials in the form to Login INI Global. <br>
+            </p>
+            <hr>
+            <p>New here?<br>
+                <small>You can create your new account here for free!</small>
+            </p>
+            <a class="button btn btn-default" href="{% url 'register' %}"> Register </a>
+
+        {% else %}
+            <h3>Welcome to the Idara Nusrate Islamia Global. <br>
+                <small>As salammualaykum!</small>
+            </h3>
+            <p>Please provide with your credentials in the form right here to create a new account in INI Global.
+            </p>
+            <hr>
+            <p>Already registered? <br>
+                <small>Looking to login with an existing account?</small>
+            </p>
+            <a class="button btn btn-default" href="{% url 'login' %}"> Login </a>
+        {% endif %}
+    </div>
+    <div class="container col-lg-6 col-md-6">
+        <h3>{{ form_text }}</h3>
+
+        <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+            {{ form|crispy }}
+            <input type='submit' class='btn btn-default' value='{{ tab_text }}'/>
+        </form>
+    </div>
+</div>
+<br>
+
+{#{% include 'footer.html' %}#}
+</body>
+</html>
