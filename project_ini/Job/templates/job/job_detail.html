@@ -1,0 +1,47 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}{{ this_job.title }} | {{ block.super }}{% endblock %}
+
+{#{% block Heading %}#}
+{#    {{ this_job.user }}'s Job Offer#}
+{#{% endblock %}#}
+
+{% block bread_home %}
+    <li><a href="{% url 'index' %}">home</a></li>
+    <li><a href="{% url 'jobs:list' %}">Jobs</a></li>
+    <li class="active">{{ this_job.title|truncatechars:20}}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="thumbnail col-sm-12 col-md-12 col-lg-12 -align-center">
+        {% if this_job.draft %}<span style="color: red"><b>DRAFT</b></span>{% endif %}
+        {% if this_job.publish > today %}<span style="color: green"><b>Future Post</b></span>{% endif %}
+
+        <h3 style="margin-left: 20px">{{ this_job.title }}</h3>
+        {% if this_job.timestamp <= this_job.updated %}
+            <p style="margin-left: 20px; color: gray;">Last Updated : {{ this_job.updated|timesince }}
+                ago</p>{% else %}
+            <p style="margin-left: 20px; color: gray;">Added : {{ this_job.timestamp|timesince }} ago</p>{% endif %}
+        <p style="margin-left: 20px"><i>Posted by : {{ this_job.user }}</i></p>
+
+        {% if this_job.image %}
+            <br>
+            <center><img src="{{ this_job.image.url }}" class="img-responsive"></center><br>{% endif %}
+
+        <div class="fb-like" style="margin-left: 20px" data-href="{{ request.build_absolute_uri }}"
+             data-layout="button_count" data-action="like" data-size="small" data-show-faces="true"
+             data-share="true"></div>
+        <hr>
+        <div style="margin-left: 20px">
+            <p><b>Detail description</b></p>
+            <p style="margin-left:20px;">{{ this_job.detail|safe|linebreaks }}</p>
+            <br>
+            <p><b>Contact details:</b></p>
+            <p style="margin-left: 20px">Mobile Number: <a>{{ this_job.contact_number }}</a></p>
+            <p style="margin-left: 20px">Email Address: <a>{{ this_job.contact_email }}</a></p>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 -align-center fb-comments"
+         data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+
+{% endblock %}

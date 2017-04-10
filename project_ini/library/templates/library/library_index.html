@@ -1,0 +1,21 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    Literature | {{ block.super }}
+{% endblock %}
+
+{% block Heading %}
+    Mehdavia Literature
+{% endblock %}
+
+{% block content %}
+    <br>
+    <h4>List of books we have in our servers</h4>
+    <hr>
+    <ul>
+        {% for book in book_list %}
+            <p><a href="{{ book.id }}"><b>{{ book.title }}</b></a>, {{ book.author }}</p>
+            <br>
+        {% endfor %}
+    </ul>
+{% endblock %}

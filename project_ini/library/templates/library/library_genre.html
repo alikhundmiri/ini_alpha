@@ -1,0 +1,17 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    Genre : {{ these.g }}
+{% endblock %}
+
+{% block Heading %}
+    List of all books in the Genre {{ these.g }}
+{% endblock %}
+
+{% block content %}
+{#    list of all books in this genre#}
+    {% for books in these %}
+        <h4>{{ books.title }}</h4>
+{#        print the book here#}
+    {% endfor %}
+{% endblock %}

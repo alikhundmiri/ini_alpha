@@ -1,0 +1,29 @@
+{% extends 'header.html' %}
+
+{% block titlepage %}
+    Literature - book name
+{% endblock %}
+
+{% block Heading %}
+    Mehdavia Literature
+{% endblock %}
+
+{% block content %}
+    <h4>{{ this_book.title }}</h4>
+    <p>{{ this_book.author}}</p>
+    genre: <a href="genre/{{ this_book.g }}">{{ this_book.g }}</a>
+    <hr>
+    <ul>
+        <p><b>Published on: </b>{{ this_book.y_o_publish }}</p>
+        <p><b>Uploaded on: </b>{{ this_book.y_o_upload }}</p>
+        <p><b>Uploaded by: </b></p>
+        <p><b>Licence :</b><i> free</i></p>
+        <p><a href="{{ this_book.link }}">Download</a></p>
+    </ul>
+    {#    book name #}
+    {#    book size #}
+    {#    Date published #}
+    {#    Date uploaded #}
+    {#    lICENCE TYPE #}
+    {#    DOWNLOAD #}
+{% endblock %}
